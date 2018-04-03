@@ -1,0 +1,6 @@
+import example.*
+test "mefijoel la imagen pos del predidente" {
+var juan =new Presidente()
+	assert.equals(0,juan.imagaenPositiba())
+
+}

@@ -1,0 +1,41 @@
+import materiales.*
+import clientes.*
+import proveedores.*
+import camisetas.*
+import centros.*
+
+describe "testeo del practico" {
+	var jorge
+	var carlos
+	var camiseta
+	var camiseta2
+	var camiseta3
+	var camiseta4 
+	
+	fixture {
+		camiseta = new Camiseta('doblea', poliester, 'negro', 2, 3, sacachispas, 1500)
+		camiseta2 = new Camiseta ('navi', dryfit, 'verde', 9, 9, sacachispas, 1500)
+        camiseta3 = new Camiseta ('navi', dryfit, 'verde', 9, 9, sanmiguel, 1500)	
+        camiseta4 = new Camiseta ('doblea', poliester, 'negro', 2, 3, sanmiguel, 1500)
+		jorge = new Tintorero('gris')
+		carlos = new Estampador('doblev')
+	}
+	
+	test"pruebo si el equipo sacachispas acepta la camiseta con refuerzos menor a 9" {
+    	assert.that( sacachispas.probarCamiseta(camiseta))
+	}
+	
+	test "pruebo si el equipo sacachispas acepta la camiseta con refuerzo mayor a mayor o igual a 9" {
+		assert.that( sacachispas.probarCamiseta(camiseta2)) // podrias preguntarle directamente a la camiseta
+															//method saberSiUnClienteAcepta(){
+	}
+	
+	test "pruebo si el equipo sanmiguel acepta la camiseta de color verde"{
+		assert.that( sacachispas.probarCamiseta(camiseta3))
+	}
+
+	test"pruebo si el equipo sanmiguel acepta la camiseta con un color distinto al verde "{
+		assert.that( sacachispas.probarCamiseta(camiseta4))
+	}
+}
+

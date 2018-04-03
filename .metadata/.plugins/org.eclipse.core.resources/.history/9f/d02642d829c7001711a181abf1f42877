@@ -1,0 +1,50 @@
+import materiales.*
+import clientes.*
+import camisetas.*
+import centros.*
+import pedidos.*
+
+class Estampador {
+	const servicio = 100 
+	const costoAgregado = 100
+	var trabajos=[]
+	constructor(tra) {
+	trabajos.add(tra)	
+		
+	}
+	method trabajarCamiseta(_camiseta ,_trabajo)
+	{
+		
+		_trabajo.apply(_camiseta)
+		_camiseta.agregarAdicional(servicio+self.servicioAgregado(_camiseta))
+	}	
+		method asd(_camiseta){
+			_camiseta.cambiarLeyenda()
+		}
+				
+				method asdd(_camiseta){
+			_camiseta.cambiarLeyenda()
+		}
+	method servicioAgregado(_camiseta){
+		return if (_camiseta.saberSiElEstampadoEsLargo()) costoAgregado else 0 
+	}
+}
+	
+class Tintorero {
+	var servicio = 75
+	
+	method trabajarCamiseta(_camiseta, _trabajo){
+		_trabajo.apply(_camiseta)
+		_camiseta.agregarAdicional(servicio+_camiseta.material().costoAdicional())
+	}
+}
+	
+class Costurero {
+	var costo = 2
+
+	method trabajarCamiseta(_camiseta, _trabajo){
+		_trabajo.apply(_camiseta)
+		_camiseta.agregarAdicional(_camiseta.getCantidad() * costo)
+	}
+}
+

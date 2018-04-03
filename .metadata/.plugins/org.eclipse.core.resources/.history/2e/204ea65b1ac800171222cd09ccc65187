@@ -1,0 +1,61 @@
+import localporttd.*
+import pedidos.*
+import centros.*
+
+
+describe "testeo del practico" {
+	var  l2
+    var l1
+	var c1
+	var c2
+	var  pedi
+	
+	fixture {
+		c2= new CentroArea(3,2)
+		 c1= new CentroArea(3,2)
+		 l2= new LocalMayorista(c1)
+    l1= new LocalMinorista(l2,c1)
+	pedi=new Pedido("cca", ["tortuga", "pedro", "toto"], 8, new Date(25,12,2017))
+	}
+	
+
+test "locar minorista puede recibir pedido" {
+ 
+  
+    l1.recibirPedido(pedi)
+	assert.equals(1,l1.cantidadPedido() )
+
+}
+test "locar mayorista puede recibir pedido de sus locales" {
+  
+
+    l1.mandarPedido(pedi)
+	assert.equals(1,l2.cantidadPedido() )
+
+}
+test "  minorista   mandar un pedido a un centro" {
+   l1.hacePedido(pedi)
+
+  
+assert.equals(1,c1.retornoPedidoss() )
+
+}
+
+
+test "  minorista   cambia de centro" {
+   l1.cambiarCentro(c2)
+
+  
+assert.equals(c2,l1.mostrarCentro() )
+
+}
+test "  mayorista  mandar un pedido a un centro" {
+   l2.hacePedido(pedi)
+
+  
+assert.equals(1,c1.retornoPedidoss() )
+
+}
+
+}
+

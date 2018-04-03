@@ -1,0 +1,6 @@
+import example.*
+program abc {
+
+	console.println('Hello Wollok')
+
+}

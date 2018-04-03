@@ -1,0 +1,35 @@
+
+class LocalMinorista {
+	var pedidos=[]
+	var localM
+	constructor(local){
+		localM=local
+		
+	}
+ method recibirPedido(pedio){
+ 	
+ 	pedidos.add(pedio)
+ }
+  method cantidadPedido(){
+  return pedidos.size()
+}
+ method mandarPedido(pedidp){
+ 	localM.recibirPedido(pedidp)
+ 	
+ 	
+ }
+}
+
+class LocalMayorista {
+	var pedidos=[]
+	
+ method recibirPedido(pedidp){
+ 	
+ 	pedidos.add(pedidp)
+ }
+  method cantidadPedido(){
+  return pedidos.size()
+}
+
+
+}

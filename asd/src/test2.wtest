@@ -1,0 +1,43 @@
+import materiales.*
+import clientes.*
+import proveedores.*
+import camisetas.*
+import centros.*
+
+describe "testeo del practico" {
+	var jorge
+	var carlos
+	var pedro
+	var camiseta
+	var camiseta2
+	var camiseta3
+	var camiseta4 
+	
+	fixture {
+		camiseta=new Camiseta('doblev', 'poliester', 'negro', 2, 3, sacachispas, 1500)
+		camiseta2=new Camiseta ('navi', 'dryfit', 'verde', 9, 9, sacachispas, 1500)
+        camiseta3=new Camiseta ('navi', 'dryfit', 'verde', 9, 9, sanmiguel, 1500)	
+        camiseta4=new Camiseta('doblev', 'poliester', 'negro', 2, 3, sanmiguel, 1500)
+		jorge= new Tintorero()
+		carlos= new Estampador()
+		pedro = new Costurero()
+	}
+
+	test "prueba si al estampar una leyenda con 5 o mas letras cobra mas de 200"{
+		assert.equals( 200,carlos.costo(camiseta4,'pepa'))
+	}
+
+	test "pruebo si al estampar una leyenda con menos de 5 letras cobra 100"{
+ 		assert.equals(100,carlos.costo(camiseta4,'pupo'))
+	}
+
+	test "pruebo si cobra 175 con material dryfit"{
+ 		assert.equals(175, jorge.costo(camiseta3,'azul'))	
+	}
+
+	test "pruebo si cobra 75 con cualquier otro material"{
+		assert.equals(75, jorge.costo(camiseta4,'azul'))
+	}
+}
+
+

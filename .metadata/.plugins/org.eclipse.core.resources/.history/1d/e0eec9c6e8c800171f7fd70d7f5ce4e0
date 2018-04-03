@@ -1,0 +1,138 @@
+import materiales.*
+import camisetas.*
+import proveedores.*
+import clientes.*
+import pedidos.*
+import locales.*
+
+class Centro {
+	var pedidos = []
+	var pedidosListos = []			
+	var porcentajeDelCentro
+	
+	constructor (porCentro){
+	 	porcentajeDelCentro = porCentro
+	}
+	
+	method retornoPedidos() {
+		return pedidos
+	} 	
+	
+	method retornoCantidadPedidos() {
+		return pedidos.size()
+	}
+	
+	method pasarPedido(_pedido, _proveedor, _trabajo, _tipoDeTrabajo) {
+		_pedido.procesar(_proveedor, _trabajo, _tipoDeTrabajo, _pedido)			
+	} 	
+	 	
+	method recibirPedido(_pedido) {
+		if (self.aceptarPedido(_pedido))
+		pedidos.add(_pedido)
+	}
+					
+	method costoCamisetas(_pedido) {
+		return _pedido.costoCamiseta() * _pedido.cantidad()
+	}	
+		
+	method saberCualesPedidosEstanListos() {
+		return pedidos.filter({pedido => pedido.estaListo() })
+	}
+	
+	method costoTotal(_pedido) {
+		return self.costoCamisetas(_pedido)
+	}	
+	
+	method ingresos() {
+		pedidosListos = self.saberCualesPedidosEstanListos()	
+		return pedidosListos.sum({pedido => self.costoTotal(pedido)})
+	}
+	
+	method aceptarPedido(_pedido) {
+		return true
+	}
+	
+	method costoPedido(_pedido) {	
+		return  _pedido.cantidad() * porcentajeDelCentro
+	}
+}
+
+class CentroCheto inherits Centro {
+	const porcentajeParaMultiplicar = 0.3
+	const precioAceptadoPorCentroCheto = 650
+	const cantidadAceptadaPorCentroCheto = 21	
+	
+	override method aceptarPedido(_pedido) {
+		return _pedido.costoCamiseta() > precioAceptadoPorCentroCheto and _pedido.esRoja() 
+		and _pedido.cantidad() < cantidadAceptadaPorCentroCheto	
+	}	
+	
+	override method costoTotal(_pedido) {
+		return super(_pedido) + (porcentajeParaMultiplicar * self.costoTotal(_pedido)) 
+	}	
+}
+
+
+class  CentroArea inherits Centro {
+	var cantidadEmpleados
+	var costoAdicional = 400
+	var costoNormal = 200
+	const descuentoTardio = 0.2
+	const brechaEmpleados = 3
+	
+	constructor(porCentro, _cantidadEmpleados) = self (porCentro) {
+		cantidadEmpleados = _cantidadEmpleados
+	}
+   
+	override method costoPedido(_pedido) {
+		if (_pedido.estaAtrasado())
+		return super(_pedido) * descuentoTardio
+	 	else return super(_pedido)
+	}
+	
+	method costoAdicional() {
+		return if (cantidadEmpleados > brechaEmpleados) costoAdicional else costoNormal 
+	}
+	
+	method costoParcial(_pedido) {
+		return self.costoCamisetas(_pedido)
+	}
+	
+	method calculoDescuento(_pedido) {
+		return self.costoParcial(_pedido) * descuentoTardio
+	}
+
+	method descuento(_pedido) {
+		return if (_pedido.estaAtrasado()) self.calculoDescuento(_pedido) else 0
+	}
+
+	override method costoTotal(_pedido) {
+		 return super(_pedido) + self.costoAdicional() - self.descuento(_pedido)
+	}	
+}
+
+class  CentroBaratija inherits Centro {
+	const descuentoDiario = 0.10
+	const precioAceptadoPorCentroBaratija = 120
+	const cantidadAceptadaPorCentrobaratija = 20	
+	const descuentoMaximo = 0.20
+	
+	override method aceptarPedido(_pedido) {
+		return _pedido.cantidad() > cantidadAceptadaPorCentrobaratija and 
+		_pedido.costoInicial() < precioAceptadoPorCentroBaratija
+	}
+	
+	method porcentajeDeDescuento(_pedido) {
+		if (_pedido.cantidad() > 20)
+		return descuentoMaximo + descuentoDiario
+		else return descuentoDiario + (_pedido.cantidad() / 100)
+	}		
+	
+	override method costoPedido(_pedido) {
+		return super(_pedido) * self.porcentajeDeDescuento(_pedido)
+	}
+	
+	override method costoTotal(_pedido) {
+		return super(_pedido) - self.porcentajeDeDescuento(_pedido)
+	}
+}

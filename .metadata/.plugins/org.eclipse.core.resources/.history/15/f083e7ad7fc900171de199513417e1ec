@@ -1,0 +1,42 @@
+
+class Local {
+	var pedidos = []
+	var centro 
+	
+	method getCentro(_centro){
+		centro = _centro
+	}
+	
+	method getPedido(_pedido,){
+		pedidos.add(_pedido)
+	}
+	
+	method gotoCentro(_pedido){
+		centro.recibirPedido(_pedido)
+	}
+
+}
+
+class Mayoristas inherits Local {
+	
+	
+	
+}
+
+
+
+class Minoristas inherits Local {
+	
+	
+	method getPedido(_pedido, _cliente){
+		new Camiseta(_cliente, _material, _color, _refuerzos, _costurasExtras, _cliente, _costoInicial)
+		pedidos.add(new Pedido(_camiseta, [_estampador, _tintorero, _costurero], _cantidad, new Date()))
+		
+	}
+
+	
+	method getCosto(_pedido){
+		return centro.costoTotal(_pedido)
+	}
+	
+}

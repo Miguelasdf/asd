@@ -1,0 +1,79 @@
+import materiales.*
+import clientes.*
+import proveedores.*
+import camisetas.*
+import centros.*
+import pedidos.*
+
+describe "testeo del practico" {
+	var jorge
+	var carlos
+	var pedro
+	var camiseta
+	var camiseta2
+	var camiseta3
+	var camiseta4 
+	var pedido1
+	var pedido2
+	var pedido3
+	var debian 
+	
+	fixture {
+		camiseta=new Camiseta('doblea', poliester, 'rojo', 9, 9, sacachispas, 1000)
+		camiseta2=new Camiseta('navi', dryfit, 'verde', 9, 9, sacachispas, 1500)
+        camiseta3=new Camiseta('navi', dryfit, 'verde', 9, 9, sanmiguel, 1500)	
+        camiseta4=new Camiseta('doblea', poliester, 'negro', 2, 3, sanmiguel, 1500)
+		jorge= new Tintorero('gris')
+		carlos= new Estampador('doblev')
+		pedro = new Costurero(5, 10, 6, 15)
+		
+		pedido1 = new Pedido(camiseta, [jorge, carlos, pedro], 18, new Date(25,10,2017))
+		pedido2 = new Pedido(camiseta, [jorge, carlos], 15, new Date(13,10,2017))
+		debian = new CentroCheto()	
+		pedido3 = new Pedido(camiseta2, [jorge, carlos], 15, new Date(13,10,2017))
+	}
+	
+	test "saber si un pedido esta listo para entregar al cliente"{
+		debian.recibirPedido(pedido1)
+		debian.pasarPedido(pedido1)
+		debian.pasarPedido(pedido1)
+		debian.pasarPedido(pedido1)
+		assert.equals(true, debian.saberSiEstaListo(pedido1))
+	}
+	
+	test "saber si un pedido esta retrasado" {
+		debian.recibirPedido(pedido2)
+		debian.pasarPedido(pedido2)
+		assert.equals(true, debian.saberSiEstaAtrasado(pedido2))
+	}
+	
+	test "saber cuanto va a cobrar el centro" {
+		debian.recibirPedido(pedido2)
+		debian.pasarPedido(pedido2)
+		debian.pasarPedido(pedido2)
+		assert.equals(34421.4, debian.ingresos())
+	}
+	
+
+test "si el centro cheto puede recibir una remera que no es roja" {
+
+	assert.that(debian.recibirPedido(pedido1))
+
+}
+
+	test "pruebo si al estampar una leyenda con 5 o mas letras cobra mas de 200"{
+		assert.equals( 200,carlos.costo(camiseta4,'pepa'))
+	}
+
+	test "pruebo si al estampar una leyenda con menos de 5 letras cobra 100"{
+ 		assert.equals(100,carlos.costo(camiseta4,'pupo'))
+	}
+
+	test "pruebo si cobra 175 con material dryfit"{
+ 		assert.equals(175, jorge.costo(camiseta3,'azul'))	
+	}
+
+	test "pruebo si cobra 75 con cualquier otro material"{
+		assert.equals(75, jorge.costo(camiseta4,'azul'))
+	}
+}

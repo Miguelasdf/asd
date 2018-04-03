@@ -1,0 +1,158 @@
+import materiales.*
+import clientes.*
+import camisetas.*
+import centros.*
+import pedidos.*
+
+class Provedor{
+	var trabajos =[]
+	
+	constructor(trabajo){
+		trabajos = trabajo
+	}
+		method cantidadDetrabajos(){
+		
+	return trabajos.size()
+	}
+		method trabajarCamiseta(_camiseta,trabajo,modificacion){
+	
+	
+
+trabajo.trabajo(_camiseta,modificacion,self)
+	
+	
+}
+
+   
+
+
+}
+class Estampador inherits Provedor {
+	const servicio = 100 
+	const costoAgregado = 100
+
+	
+
+	
+	override method  trabajarCamiseta(_camiseta,trabajo,modificacion){
+		super(_camiseta,trabajo,modificacion)
+		
+		_camiseta.forEach ({camista=> camista.agregarAdicional(servicio+self.servicioAgregado(camista))})
+		//var ccr=trabajo
+		//ccr.apply(_camiseta)
+	//	_camiseta.agregarAdicional(servicio+self.servicioAgregado(_camiseta))
+	}
+	
+	method servicioAgregado(_camiseta){
+		return if (_camiseta.saberSiElEstampadoEsLargo()) costoAgregado else 0 
+	}
+	
+	
+
+}
+	
+class Tintorero  inherits Provedor{
+	var servicio = 75
+
+	
+	
+	
+override	method trabajarCamiseta(_camiseta,trabajo,modificacion){
+		_camiseta.forEach({camiseta => camiseta.cambiarColor(trabajo)})
+		_camiseta.cambiarColor(trabajo)
+		_camiseta.agregarAdicional(servicio+_camiseta.material().costoAdicional())
+	}
+	
+}
+	
+	
+class Costurero  inherits Provedor{
+//	var costoUnRefuerzo = 10.randomUpTo(20) // lindo para jugar, feo para testear
+//	var costoUnaCostura = 5.randomUpTo(10)
+
+
+	var costoUnaCostura
+
+	var costoUnRefuerzo
+
+
+
+method actualisarPreecio(_camiseta,costuras){
+
+	 _camiseta.forEach({camistea=>camistea.agregarAdicional(costoUnaCostura * costuras)})
+	
+//	if (trabajo=="costura"){
+//		_camiseta.forEach({camiseta => camiseta.agregarCostura(costuras)})
+//		_camiseta.agregarAdicional(costoUnaCostura * costuras)}
+//		else {
+	//		_camiseta.forEach({camiseta => 	camiseta.agregarRefuerzo(refuerzos)})
+	
+//		_camiseta.agregarAdicional(costoUnRefuerzo * refuerzos)}
+	} 
+	
+	
+	method actualisarPreecio2(_camiseta,refuerzos){
+
+	 _camiseta.forEach({camistea=>camistea.agregarAdicional(costoUnRefuerzo * refuerzos)})
+	
+	
+
+}}
+object trabjo  {
+	
+	
+method trabajo(camistass,costuras,prove){
+	
+	
+	camistass.forEach({camiseta => camiseta.agregarCostura(costuras)})
+	prove.actualisarPreecio(camistass,costuras)
+	
+} 
+	
+	
+	
+	
+	
+	
+	
+}
+object trabjo2  {
+	
+	
+method trabajo(camistass,refuerzos,prove){
+	
+	
+	camistass.forEach({camiseta => camiseta.agregarCostura(refuerzos)})
+	prove.actualisarPreecio(camistass,refuerzos)
+} 
+	
+		
+	
+	
+	
+}
+
+object trabjo3  {
+	
+	
+method trabajo(camistass,leyenda,prove){
+	
+	
+	camistass.forEach({camiseta => camiseta.cambiarLeyenda(leyenda)})
+	
+} 
+	
+}
+
+
+object trabjo4  {
+	
+	
+method trabajo(camistass,numero,prove){
+	
+	
+	camistass.forEach({camiseta => camiseta.estamparNumero(numero)})
+
+} 
+	
+}

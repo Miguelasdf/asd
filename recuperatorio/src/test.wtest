@@ -1,0 +1,6 @@
+import example.*
+test "testX" {
+
+	assert.that(true)
+
+}

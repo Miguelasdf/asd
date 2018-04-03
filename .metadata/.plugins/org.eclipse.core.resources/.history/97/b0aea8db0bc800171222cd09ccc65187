@@ -1,0 +1,12 @@
+
+class Local {
+	var pedidos=[]
+	
+ method recibirPedido(pedio){
+ 	
+ 	pedidos.add(pedio)
+ }
+  method mostrapedido(){
+  return pedidos
+}
+}
