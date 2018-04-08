@@ -1,0 +1,16 @@
+/** First Wollok example */
+object wollok {
+	
+	var algo2= "asd a"
+	var algo1
+	method howAreYou(algo) {
+		return algo.size()
+	}
+}
+
+object echizo1{
+	
+	
+	
+	
+}

@@ -1,0 +1,9 @@
+/** First Wollok example */
+object wollok {
+	
+	var algo= "asd a"
+	method howAreYou() {
+		return algo.size()
+	}
+}
+ 
